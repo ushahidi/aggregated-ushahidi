@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html class="no-js">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>Ushahidi</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+		<link rel="apple-touch-icon" sizes="57x57" href="/images/fav/apple-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="/images/fav/apple-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="/images/fav/apple-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="/images/fav/apple-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="/images/fav/apple-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="/images/fav/apple-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="/images/fav/apple-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="/images/fav/apple-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/fav/apple-icon-180x180.png">
+		<link rel="icon" type="image/png" sizes="192x192"  href="/images/fav/android-icon-192x192.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/fav/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="/images/fav/favicon-96x96.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/fav/favicon-16x16.png">
+		<link rel="manifest" href="/images/fav/manifest.json">
+		<meta name="msapplication-TileColor" content="#ffffff">
+		<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+		<meta name="theme-color" content="#ffffff">
+
+		<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+		<script src="js/vendor/leaflet.markercluster.js"></script>
+		<link rel="stylesheet" href="css/leaflet.css">
+
+		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="css/responsive.css">
+
+
+		<script src="js/vendor/modernizr-2.6.2.min.js"></script>
+	</head>
+	<body>
+		<!--[if lt IE 8]>
+			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+		<![endif]-->
+
+		<div class="layout">
+
+			<header>
+				<a href="index.html" class="logo">
+					<img src="images/logo.png" alt="Ushahidi" />
+				</a>
+				<div class="tools">
+					<div class="tool-box">
+						<i class="ico">
+							<img src="images/ico-reports.png" alt="reports" />
+						</i>
+						<span class="text">
+							<strong class="number-of-reports">0</strong>
+							Reports of
+                            <strong class="number-of-reports-in-source">0</strong>
+						</span>
+					</div>
+					<div class="tool-box">
+						<i class="ico">
+							<img src="images/ico-deployments.png" alt="reports" />
+						</i>
+						<span class="text">
+							<strong class="number-of-deployments">0</strong>
+							Ushahidi Deployments
+						</span>
+					</div>
+				</div>
+			</header>
+
+			<div id="map"></div>
+
+			<footer>
+				<div class="holder">
+
+                    <marquee scrollamount="10" scrolldelay="100"  direction="right" class="marquee">
+
+                    </marquee>
+
+				</div>
+			</footer>
+
+		</div>
+
+		<script src="js/vendor/jquery-1.11.1.min.js"></script>
+		<script src="js/vendor/bootstrap.min.js"></script>
+		<script src="js/vendor/jquery.placeholder.js"></script>
+        <script src="js/TileLayer.Grayscale.js"></script>
+        <script src="js/vendor/lodash.min.js"></script>
+
+        <script src="js/etc/app.config.js"></script>
+        <script src="js/api/countries.js"></script>
+        <script src="js/api/dataProvider.js"></script>
+		<script src="js/main.js"></script>
+
+
+
+	</body>
+</html>

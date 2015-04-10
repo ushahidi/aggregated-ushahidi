@@ -1,0 +1,268 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:400,700);
+
+html{
+	height:100%;
+}
+body{
+	position:relative;
+	height:100%;
+	font:13px/1.53 'Lato', Arial, Helvetica, sans-serif;
+	color:#181c21;
+	margin:0;
+}
+a{
+	text-decoration:none;
+	color:blue;
+}
+a:hover{
+	text-decoration:none;
+}
+
+#map { 
+	width:100%; 
+	height:100%; 
+	margin: 0;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.leaflet-grid-label .lng {
+	margin-left: 8px;
+	-webkit-transform: rotate(90deg);
+	transform: rotate(90deg);
+}
+
+.leaflet-grid-label .lat, 
+.leaflet-grid-label .lng {
+	text-shadow: -2px 0 #FFFFFF, 0 2px #FFFFFF, 2px 0 #FFFFFF, 0 -2px #FFFFFF;
+}
+
+.leaflet-top .leaflet-control {
+	margin-top: 0;
+}
+.leaflet-left .leaflet-control {
+	margin-left: 20px;
+}
+.leaflet-bar a, .leaflet-bar a:hover {
+	background-color: #232930;
+	border-bottom: 1px solid #3d444d;
+	width: 32px;
+	height: 32px;
+	line-height: 32px;
+	color:#e6e6e6;
+}
+.leaflet-bar {
+	box-shadow: none;
+	border-radius: 3px;
+	position:absolute;
+	top:50%;
+	margin-top:-32px;
+}
+
+.leaflet-top {
+	top:50%;
+}
+
+.leaflet-cluster-anim .leaflet-marker-icon, .leaflet-cluster-anim .leaflet-marker-shadow {
+	-webkit-transition: -webkit-transform 0.3s ease-out, opacity 0.3s ease-in;
+	-moz-transition: -moz-transform 0.3s ease-out, opacity 0.3s ease-in;
+	-o-transition: -o-transform 0.3s ease-out, opacity 0.3s ease-in;
+	transition: transform 0.3s ease-out, opacity 0.3s ease-in;
+}
+	
+
+
+.marker-cluster-small,
+.marker-cluster-medium,
+.marker-cluster-large {
+	background-color: rgba(255, 195, 52, .25);
+}
+.marker-cluster-small div,
+.marker-cluster-medium div,
+.marker-cluster-large div {
+	background-color: rgba(255, 195, 52, 1);
+}
+
+
+.marker-cluster {
+	background-clip: padding-box;
+}
+
+.marker-cluster-medium {
+	border-radius: 27px;
+}
+.marker-cluster-medium div {
+	width: 34px;
+	height: 34px;
+	margin-left:10px;
+	margin-top:10px;
+	text-align: center;
+	border-radius: 17px;
+	font-size:16px;
+	font-weight:bold;
+	color: #fff;
+}
+
+.marker-cluster-small {
+	border-radius: 15px;
+}
+
+.marker-cluster-small div {
+	width: 10px;
+	height: 10px;
+	border-radius: 5px;
+	font-size:0px;
+	margin-left:10px;
+	margin-top:10px;
+}
+
+
+.marker-cluster-medium span {
+	line-height: 34px;
+}
+
+.popup-title {
+	font-size:24px;
+	line-height:1.1;
+	font-weight:bold;
+	color:#2274b4;
+	margin:0;
+}
+
+.popup-content {
+	display:block;
+	color: #fff;
+	min-width:400px;
+	margin:20px 0;
+}
+
+.leaflet-container .popup-btn {
+	display:inline-block;
+	vertical-align:top;
+	margin:0;
+	padding:0;
+	border:none;
+	outline:none;
+	text-decoration:none;
+	color:#fff;
+	font-size:13px;
+	line-height:18px;
+	padding:8px 18px;
+	border-radius:4px;
+	background:#2274b4;
+}
+
+.leaflet-container .popup-btn:before {
+	display:inline-block;
+	vertical-align:top;
+	content:'';
+	background:url(../images/ico-arr.png) no-repeat 0 50%;
+	width:8px;
+	height:18px;
+	margin-right:10px;
+}
+
+.leaflet-container .popup-btn:hover {
+	opacity:.75;
+}
+
+.layout {
+	position:relative;
+	overflow:hidden;
+	height:100%;
+}
+
+header {
+	position:absolute;
+	left:0;
+	top:0;
+	width:100%;
+	z-index:2;
+	padding:10px 20px;
+	background:#292c31;
+	overflow:hidden;
+}
+.logo {
+	float:left;
+}
+.logo img {
+	height:40px;
+	width:auto;
+	vertical-align:top;
+}
+.tools {
+	float:right;
+	padding:8px 0;
+}
+.tool-box {
+	float:left;
+	margin:0 10px;
+	line-height:24px;
+}
+.tool-box .ico {
+	height:24px;
+	line-height:24px;
+	display:inline-block;
+	vertical-align:top;
+	margin:0 10px 0 0;
+}
+.tool-box .ico img {
+	vertical-align:middle;
+}
+.tool-box .text {
+	color:#919599;
+	font-size:12px;
+	line-height:18px;
+	padding:3px 10px;
+	background: rgba(255,255,255,.06);
+	border-radius: 3px;
+	position:relative;
+	display:inline-block;
+	vertical-align:top;
+	margin:0 10px;
+}
+.tool-box .text:before {
+	content:'';
+	position:absolute;
+	right:100%;
+	top:50%;
+	margin-top:-4px;
+	border:none;
+	border-right:5px solid rgba(255,255,255,.06);
+	border-top: 5px solid transparent;
+	border-bottom: 5px solid transparent;
+}
+.tool-box .text strong {
+	color:#c2c6cc;
+	font-size:13px;
+	margin-right:2px;
+}
+footer {
+	font-size:12px;
+	position:absolute;
+	left:0;
+	bottom:0;
+	z-index:2;
+	width:100%;
+	padding:5px 20px;
+	white-space:nowrap;
+	color:#b2b2b2;
+	background:#292c31;
+}
+footer a {
+	text-decoration:none;
+	color:#2274b4;
+	font-weight:bold;
+}
+footer .msg {
+	margin-right:30px;
+}
+footer .holder{
+	margin-left:-90px;
+}
+
+.hidden{
+    display: none;
+}
