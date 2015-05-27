@@ -111,7 +111,7 @@ dataProvider.prototype.setViewed = function(type, value){
  * @param item object
  * @returns {boolean}
  */
-dataProvider.prototype.isItemAllradyExist = function(item){
+dataProvider.prototype.isItemAllreadyExist = function(item){
     return (item.id in this.allItemIds)
 }
 
