@@ -54,6 +54,13 @@ a:hover{
 .leaflet-top .leaflet-control {
 	margin-top: 0;
 }
+
+.leaflet-control-attribution.leaflet-control {
+	position: fixed;
+	left: 0;
+	bottom: 33px;
+}
+
 .leaflet-left .leaflet-control {
 	margin-left: 20px;
 }
