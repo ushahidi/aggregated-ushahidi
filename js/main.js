@@ -1,3 +1,4 @@
+// this file needs major clean up and restructuring - excuse the mess
 $(function () {
 
   var searchAreas = config.markers;
@@ -30,7 +31,6 @@ $(function () {
       startLocation.lng = countrInfo.longitude;
     }
   }
-
 
   var map = L.map('map').setView([startLocation.lat, startLocation.lng], startLocation.zoom);
 
@@ -72,7 +72,8 @@ $(function () {
       });
     }
   });
-  
+
+  //create crossfilter dimensions and groups for visualising charts
   cx = crossfilter();
   byDate = cx.dimension(function(d){ return d3.time.day(new Date(d.createdAt))});
   byDateGroup = byDate.group().reduceCount(); //report count grouped by date
@@ -80,11 +81,29 @@ $(function () {
     var lastToken = d.geo.addressComponents.formattedAddress.split(',').pop()
     return lastToken;
   })
-  byAddressGroup = byAddress.group().reduceCount() //report count grouped by address
+  byAddressGroup = byAddress.group().reduceCount(); //report count grouped by address
   byDeployment = cx.dimension(function(d){ return d.author.name});
-  byDeploymentGroup = byDeployment.group().reduceCount() //report count grouped by deployment names
+  byDeploymentGroup = byDeployment.group().reduceCount(); //report count grouped by deployment names
+  byTag = cx.dimension(function(d){
+    var tags = d.tags.map(function(d){ return d.name});
+    return tags;
+  });
+  byTagGroup = byTag.groupAll().reduce(reduceAdd, reduceRemove, reduceInitial).value();
   
-  $('#charts').hide()
+  byTagGroup.all = function() {
+    var newObject = [];
+    for (var key in this) {
+      if (this.hasOwnProperty(key) && key != "all") {
+        newObject.push({
+          key: key,
+          value: this[key]
+        });
+      }
+    }
+    newObject.sort(function(a,b){return b.value - a.value });
+    //return only top 20 tags
+    return newObject.slice(0,20);
+  }
 
   var dateLabelFormatter = d3.time.format('%b %e, %Y');
   
@@ -131,8 +150,6 @@ $(function () {
       .dimension(byAddress)
       .group(limitToTopFive(byAddressGroup))
       .ordering(function(d){return -d.value;})
-      // .xUnits(d3.time.days)
-      // .margins({top:10,right:30,bottom:20,left:60})
     ; 
   }
 
@@ -144,8 +161,16 @@ $(function () {
       .dimension(byDeployment)
       .group(limitToTopFive(byDeploymentGroup))
       .ordering(function(d){return -d.value;})
-      // .xUnits(d3.time.days)
-      // .margins({top:10,right:30,bottom:20,left:60})
+    ; 
+  }
+  function createByTagChart() {
+    return dc.rowChart('#byTagChart')
+      .width(500)
+      .height(800)
+      .elasticX(true)
+      .dimension(byTag)
+      .group(byTagGroup)
+      .ordering(function(d){return -d.value;})
     ; 
   }
 
@@ -228,13 +253,12 @@ $(function () {
     //this condition is true after all api calls are made, 
     //although only the first time since apicallcount is never reset
     if (apiCallCount == config.markers.length) {
-      
+
+      //create charts only when all data is loaded, not the best place but..      
       byDateChart = createBarChart();
-      // byDateChart.render();
       byAddressChart = createByAddressChart();
-      // byAddressChart.render();
       byDeploymentChart = createByDeploymentChart();
-      // byDeploymentChart.render();
+      byTagChart = createByTagChart();
       dc.renderAll();
       $('#charts').fadeIn();
 
@@ -272,5 +296,23 @@ $(function () {
     return arrayOfWords.slice(0, 40).join(' ') + ((arrayOfWords.length > 40) ? '...' : '');
   }
 
+  //reduce functions for counting report tags
+  function reduceAdd(p, v) {
+    v.tags.forEach (function(val, idx) {
+      p[val.name] = (p[val.name] || 0) + 1; //increment counts
+    });
+    return p;
+  }
+
+  function reduceRemove(p, v) {
+    v.tags.forEach (function(val, idx) {
+      p[val.name] = (p[val.name] || 0) - 1; //decrement counts
+    });
+    return p;
+  }
+
+  function reduceInitial() {
+    return {};
+  }
 
 });
