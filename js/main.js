@@ -7,12 +7,12 @@ $(function () {
   var countryName = location.href.substring(location.href.lastIndexOf('/#')+1, location.href.length);
   countryName = countryName.replace('#','');
   searchAreas.map(function (searchArea) {
-    api.getData('getAddressPoints', searchArea, addMarkerToMaps)
-  })
+    api.getData('getAddressPoints', searchArea, addMarkerToMaps);
+  });
 
   api.getData('getNumberOfReportsInSource', {}, function(responce){
     $('.number-of-reports-in-source').text(responce.total);
-  })
+  });
 
   $('input, textarea').placeholder();
 
@@ -61,11 +61,13 @@ $(function () {
     },
     iconCreateFunction: function (cluster) {
       var clusterSize = "small";
-      var x = y = 30;
+      var x = 30,
+          y = 30;
 
       if (cluster.getChildCount() > 1) {
         clusterSize = "medium";
-        x = y = 54;
+        x = 54;
+        y = 54;
       }
       return new L.DivIcon({
         html: '<div><span>' + cluster.getChildCount() + '</span></div>',
@@ -77,17 +79,17 @@ $(function () {
 
   //create crossfilter dimensions and groups for visualising charts
   cx = crossfilter();
-  byDate = cx.dimension(function(d){ return d3.time.day(new Date(d.createdAt))});
+  byDate = cx.dimension(function(d){ return d3.time.day(new Date(d.createdAt));});
   byDateGroup = byDate.group().reduceCount(); //report count grouped by date
   byAddress = cx.dimension(function(d){ 
-    var lastToken = d.geo.addressComponents.formattedAddress.split(',').pop()
+    var lastToken = d.geo.addressComponents.formattedAddress.split(',').pop();
     return lastToken;
-  })
+  });
   byAddressGroup = byAddress.group().reduceCount(); //report count grouped by address
-  byDeployment = cx.dimension(function(d){ return d.author.name});
+  byDeployment = cx.dimension(function(d){ return d.author.name;});
   byDeploymentGroup = byDeployment.group().reduceCount(); //report count grouped by deployment names
   byTag = cx.dimension(function(d){
-    var tags = d.tags.map(function(d){ return d.name});
+    var tags = d.tags.map(function(d){ return d.name;});
     return tags;
   });
   byTagGroup = byTag.groupAll().reduce(reduceAdd, reduceRemove, reduceInitial).value();
@@ -102,10 +104,10 @@ $(function () {
         });
       }
     }
-    newObject.sort(function(a,b){return b.value - a.value });
+    newObject.sort(function(a,b){return b.value - a.value;});
     //return only top 20 tags
     return newObject.slice(0,20);
-  }
+  };
 
   var dateLabelFormatter = d3.time.format('%b %e, %Y');
   
@@ -191,8 +193,8 @@ $(function () {
         distance: round,
         location: map.getCenter().lat+', '+ map.getCenter().lng
       }, function(responce){
-        addMarkerToMaps(responce, {recalculate: false})
-      })
+        addMarkerToMaps(responce, {recalculate: false});
+      });
     }
 
     api.getAllItems().map(function (item) {
@@ -203,8 +205,8 @@ $(function () {
       }
     });
 
-    api.setViewed('reports', reports)
-    api.setViewed('deployments', authorsId.filter(onlyUnique).length)
+    api.setViewed('reports', reports);
+    api.setViewed('deployments', authorsId.filter(onlyUnique).length);
 
     $('.number-of-deployments').text(api.getViewed('deployments'));
     $('.number-of-reports').text(api.getViewed('reports'));
@@ -216,15 +218,13 @@ $(function () {
    *
    * @param data
    */
-  function addMarkerToMaps(data, options) {
+  function addMarkerToMaps(data, opt) {
     if (!data) {
       return;
     }
-
-    var options = options || null;
-
+    var options = opt || null;
     var authorsId = [];
-
+    var newData = [];
 
     data.data.map(function (item) {
       authorsId.push(item.author.remoteID);
@@ -232,9 +232,10 @@ $(function () {
       if (api.isItemAllreadyExist(item)){
         return;
       }
-      cx.add([item]);
-      api.addItem(item);
 
+      newData.push(item);
+      api.addItem(item);
+      //add popovers for new reports
       var popupContent = '<div class="popup-title">' + item.summary + '</div>' +
         '<div class="popup-content">' + contentStrip(item.content) + '</div>' +
         ((item.fromURL) ? '<a href="' + 'google.ru' + '" class="popup-btn">More info</a>': '');
@@ -243,20 +244,22 @@ $(function () {
         maxWidth: '400px',
         minWidth: '200px',
         offset: new L.Point(0, 0)
-      }
+      };
       var marker = L.marker(L.latLng(item.geo.coords[1], item.geo.coords[0]), {title: item.summary});
       marker.bindPopup(popupContent, popupOption);
       markers.addLayer(marker);
-    })
-
+    });
+    map.addLayer(markers);
+    
+    //add new data to crossfilter
+    cx.add(newData);
 
     apiCallCount++;
 
     //this condition is true after all api calls are made, 
-    //although only the first time since apicallcount is never reset
+    //although only the first time since apicallcount is never reset, poor logic.
     if (apiCallCount == config.markers.length) {
-
-      //create charts only when all data is loaded, not the best place but..      
+      //create charts only when initial reports are loaded, not the best place but..      
       byDateChart = createBarChart();
       byAddressChart = createByAddressChart();
       byDeploymentChart = createByDeploymentChart();
@@ -264,32 +267,35 @@ $(function () {
       dc.renderAll();
       $('#charts').fadeIn();
       $('#loader').fadeOut();
+
+      //add marquee. Again, this means marquee is not updated when new data becomes available
       for (var i = data.data.length - 15; i <= data.data.length; ++i) {
-
         var template = _.template('<span class="msg"><%= title %>  - <a href="<%= link %>"><%= author %></a></span>');
-
         if (data.data[i] && data.data[i].summary && data.data[i].author.name) {
           $('.marquee').append(template({
             'title': data.data[i].summary,
-            'link': 'javascript:;',
+            'link': 'javascript;',
             'author': data.data[i].author.name
           }));
         }
       }
     }
 
-
     if (!options || options && options.recalculate){
-      api.setViewed('reports', api.getViewed('reports') + data.data.length)
+      //calculated only for the first time
+      api.setViewed('reports', api.getViewed('reports') + data.data.length);
       $('.number-of-reports').text(api.getViewed('reports'));
 
-      var depoloyments = api.setArrayOfAuthors(api.getArrayOfAuthors().concat(authorsId));
-      api.setViewed('deployments', depoloyments.length)
+      var deployments = api.setArrayOfAuthors(api.getArrayOfAuthors().concat(authorsId));
+      api.setViewed('deployments', deployments.length);
 
       $('.number-of-deployments').text(api.getViewed('deployments'));
     }
 
-    map.addLayer(markers);
+    //redraw charts when new data becomes available on zoom or drag
+    if(options && options.recalculate === false) {
+      dc.redrawAll();
+    }
   }
 
   function contentStrip(content) {
