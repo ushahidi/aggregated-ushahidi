@@ -43,13 +43,15 @@ $(function () {
   L.tileLayer.grayscale('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
     minZoom: 2,
-    maxZoom: 24
+    maxZoom: 18
   }).addTo(map);
 
   var markers = L.markerClusterGroup({
     chunkedLoading: true,
     singleMarkerMode: true,
     maxClusterRadius: 60,
+    spiderfyOnMaxZoom: false,
+    disableClusteringAtZoom: 10,
     polygonOptions: {
       fillColor: '#3887be',
       color: '#3887be',
@@ -133,7 +135,7 @@ $(function () {
       .elasticX(true)
       .dimension(byDate)
       .group(byDateGroup)
-      .xUnits(d3.time.days)
+      .xUnits(function(){return 100;})
       .brushOn(true)
       .xAxisPadding('5%')
       .margins({top:10,right:30,bottom:20,left:60})
