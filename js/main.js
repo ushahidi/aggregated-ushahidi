@@ -261,7 +261,7 @@ $(function () {
       byTagChart = createByTagChart();
       dc.renderAll();
       $('#charts').fadeIn();
-
+      $('#loader').fadeOut();
       for (var i = data.data.length - 15; i <= data.data.length; ++i) {
 
         var template = _.template('<span class="msg"><%= title %>  - <a href="<%= link %>"><%= author %></a></span>');

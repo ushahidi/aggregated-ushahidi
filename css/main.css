@@ -1,5 +1,9 @@
 @import url(http://fonts.googleapis.com/css?family=Lato:400,700);
 
+* {
+	box-sizing: border-box;
+}
+
 html{
 	height:100%;
 }
@@ -16,6 +20,33 @@ a{
 }
 a:hover{
 	text-decoration:none;
+}
+
+@-moz-keyframes spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
+
+#loader {
+	display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-top: 10px;
+    margin-left: 10px;
+	background: url(../images/spinner.png) center;
+	background-size: contain;
+    animation-name: spin;
+    animation-duration: 1000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
 }
 
 #map { 
@@ -35,10 +66,6 @@ a:hover{
 	bottom: 33px;
 	overflow-y: auto;
 	display: none;
-}
-
-* {
-	box-sizing: border-box;
 }
 
 .leaflet-grid-label .lng {
@@ -201,7 +228,7 @@ header {
 	width:100%;
 	z-index:2;
 	padding:10px 20px;
-	background:#292c31;
+	background:#1E232A;
 	overflow:hidden;
 }
 .logo {
