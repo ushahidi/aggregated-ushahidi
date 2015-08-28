@@ -79,7 +79,7 @@ $(function () {
 
   //create crossfilter dimensions and groups for visualising charts
   cx = crossfilter();
-  byDate = cx.dimension(function(d){ return d3.time.day(new Date(d.createdAt));});
+  byDate = cx.dimension(function(d){ return d3.time.day(new Date(d.publishedAt));});
   byDateGroup = byDate.group().reduceCount(); //report count grouped by date
   byAddress = cx.dimension(function(d){ 
     var lastToken = d.geo.addressComponents.formattedAddress.split(',').pop();
@@ -124,8 +124,8 @@ $(function () {
   }
   
   function createBarChart() {
-    var mindate = d3.time.day(new Date(byDate.bottom(1)[0].createdAt));
-    var maxdate = d3.time.day(new Date(byDate.top(1)[0].createdAt));
+    var mindate = d3.time.day(new Date(byDate.bottom(1)[0].publishedAt));
+    var maxdate = d3.time.day(new Date(byDate.top(1)[0].publishedAt));
     updateDateLabel( dateLabelFormatter(mindate) , dateLabelFormatter(maxdate) );
     var xscale = d3.time.scale()
       .domain([mindate, maxdate])
