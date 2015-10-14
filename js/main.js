@@ -32,6 +32,8 @@ $(function () {
     }
   }
 
+  var charts_width = $('#charts').width();
+
   var map = L.map('map').setView([startLocation.lat, startLocation.lng], startLocation.zoom);
 
   map.on('zoomend', reCalculateReportsAndDeployments);
@@ -130,8 +132,8 @@ $(function () {
     var xscale = d3.time.scale()
       .domain([mindate, maxdate])
     ;
-    return dc.barChart('#byDateChart')
-      .width(500)
+    var chart = dc.barChart('#byDateChart')
+      .width(charts_width)
       .height(200)
       .elasticY(true)
       .elasticX(true)
@@ -142,13 +144,14 @@ $(function () {
       .xAxisPadding('5%')
       .margins({top:10,right:30,bottom:20,left:60})
       .x(xscale)
-      .xAxis().ticks(5)
     ;
+    chart.xAxis().ticks(5);
+    return chart;
   }
   
   function createByAddressChart() {
     return dc.rowChart('#byAddressChart')
-      .width(500)
+      .width(charts_width)
       .height(200)
       .elasticX(true)
       .dimension(byAddress)
@@ -159,7 +162,7 @@ $(function () {
 
   function createByDeploymentChart() {
     return dc.rowChart('#byDeploymentChart')
-      .width(500)
+      .width(charts_width)
       .height(200)
       .elasticX(true)
       .dimension(byDeployment)
@@ -169,7 +172,7 @@ $(function () {
   }
   function createByTagChart() {
     return dc.rowChart('#byTagChart')
-      .width(500)
+      .width(charts_width)
       .height(800)
       .elasticX(true)
       .dimension(byTag)
@@ -322,10 +325,33 @@ $(function () {
   function reduceInitial() {
     return {};
   }
+  function redrawCharts () {
+    var w = $('#charts').width();
+    byDateChart
+        .width(w)
+        .redraw();
+    byAddressChart
+        .width(w)
+        .redraw();
+    byDeploymentChart
+        .width(w)
+        .redraw();
+    byTagChart
+      .width(w)
+      .redraw();  
+  }
+  window.onresize = function() {
+    redrawCharts();
+  };
 
-});
-
-$('.charts-trigger').click(function() {
+  $('.charts-trigger').click(function() {
     $('#charts').toggleClass('on-screen');
     $(this).toggleClass('on-screen');
+    redrawCharts();
+  });
+
 });
+
+
+
+
