@@ -58,7 +58,7 @@ a:hover{
 #charts {
 	position: fixed;
 	display: none;
-	top: 156px;
+	top: 126px;
 	right: -767px;
 	z-index: 3000;
 	background-color: rgba(255,255,255,0.5);
@@ -98,9 +98,15 @@ a:hover{
 	position: absolute;
 	height: 40px;
 	width: 40px;
-	bottom: 30px;
+	top: 40px;
 	right: 20px;
 	border-radius: 5px;
+}
+
+@media screen and (min-width: 500px) {
+	.charts-trigger {
+		top: 25px;
+	}
 }
 
 .charts-trigger img {
@@ -284,9 +290,15 @@ header {
 	top:0;
 	width:100%;
 	z-index:2;
-	padding:10px 20px;
+	padding:10px 20px 0;
 	background:#1E232A;
 	overflow:hidden;
+}
+
+@media screen and (min-width: 500px) {
+	header {
+		padding:10px 20px;
+	}
 }
 
 @media screen and (min-width: 767px) {
@@ -296,10 +308,17 @@ header {
 }
 
 .logo img {
-	height:40px;
+	height:30px;
 	width:auto;
 	vertical-align:top;
 }
+
+@media screen and (min-width: 500px) {
+	.logo img {
+		height:40px;
+	}
+}
+
 .tools {
 	padding:8px 0;
 }
@@ -312,8 +331,18 @@ header {
 
 }
 
+.leaflet-control-attribution {
+	display: none;
+}
+
+@media screen and (min-width: 767px) {
+	.leaflet-control-attribution {
+		display: block;
+	}
+}
+
 .tool-box {
-	margin:10px;
+	margin: 0 10px 10px;
 	line-height:24px;
 	display: block;
 }
