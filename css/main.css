@@ -57,15 +57,72 @@ a:hover{
 
 #charts {
 	position: fixed;
-	top: 61px;
-	right: 0;
-	z-index: 10;
+	display: none;
+	top: 156px;
+	right: -767px;
+	z-index: 3000;
 	background-color: rgba(255,255,255,0.5);
 	padding: 10px;
-	width: 500px;
+	width: 90%;
 	bottom: 33px;
 	overflow-y: auto;
+	transition: all 0.5s ease;
+}
+
+#charts.on-screen {
+	right: 0px;
+}
+
+@media screen and (min-width: 500px) {
+	#charts {
+		top: 93px;
+    }
+
+	#charts.on-screen {
+		top: 93px;
+		right: 0px;
+    }
+}
+
+@media screen and (min-width: 767px) {
+	#charts, #charts.on-screen {
+		right: 0px;
+		width: 45%;
+		top: 61px;
+		max-width: 500px;
+    }
+}
+
+.charts-trigger {
+	background: #2274b4;
+	position: absolute;
+	height: 40px;
+	width: 40px;
+	bottom: 30px;
+	right: 20px;
+	border-radius: 5px;
+}
+
+.charts-trigger img {
+	padding: 14px;
+}
+
+.charts-trigger .close-icon {
 	display: none;
+}
+
+.charts-trigger.on-screen .close-icon {
+	display: block;
+}
+
+.charts-trigger.on-screen .chart-icon {
+	display: none;
+}
+
+@media screen and (min-width: 767px) {
+	.charts-trigger {
+		display: none;
+	}
 }
 
 .leaflet-grid-label .lng {
@@ -231,23 +288,43 @@ header {
 	background:#1E232A;
 	overflow:hidden;
 }
-.logo {
-	float:left;
+
+@media screen and (min-width: 767px) {
+	.logo {
+		float:left;
+	}
 }
+
 .logo img {
 	height:40px;
 	width:auto;
 	vertical-align:top;
 }
 .tools {
-	float:right;
 	padding:8px 0;
 }
-.tool-box {
-	float:left;
-	margin:0 10px;
-	line-height:24px;
+
+@media screen and (min-width: 767px) {
+
+	.tools {
+		float:right;
+	}
+
 }
+
+.tool-box {
+	margin:10px;
+	line-height:24px;
+	display: block;
+}
+
+@media screen and (min-width: 500px) {
+	.tool-box {
+		margin: 0 10px;
+		float:left;
+	}
+}
+
 .tool-box .ico {
 	height:24px;
 	line-height:24px;
@@ -255,6 +332,7 @@ header {
 	vertical-align:top;
 	margin:0 10px 0 0;
 }
+
 .tool-box .ico img {
 	vertical-align:middle;
 }
@@ -312,4 +390,8 @@ footer .holder{
 
 .hidden{
     display: none;
+}
+
+.dc-chart .axis path, .dc-chart .axis line {
+	stroke: #b7b7b7 !important;
 }
