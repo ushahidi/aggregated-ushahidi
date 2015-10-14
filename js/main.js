@@ -324,3 +324,8 @@ $(function () {
   }
 
 });
+
+$('.charts-trigger').click(function() {
+    $('#charts').toggleClass('on-screen');
+    $(this).toggleClass('on-screen');
+});
