@@ -16,7 +16,7 @@ body{
 }
 a{
 	text-decoration:none;
-	color:blue;
+	color: rgba(255, 195, 52, 1);
 }
 a:hover{
 	text-decoration:none;
@@ -58,12 +58,12 @@ a:hover{
 #charts {
 	position: fixed;
 	display: none;
-	top: 126px;
-	right: -767px;
+	top: 160px;
+	right: -800px;
 	z-index: 3000;
-	background-color: rgba(255,255,255,0.5);
+	background-color: rgba(255,255,255,0.8);
 	padding: 10px;
-	width: 90%;
+	width: 100%;
 	bottom: 33px;
 	overflow-y: auto;
 	transition: all 0.5s ease;
@@ -76,20 +76,21 @@ a:hover{
 @media screen and (min-width: 500px) {
 	#charts {
 		top: 93px;
+		bottom: 33px;
     }
-
 	#charts.on-screen {
 		top: 93px;
 		right: 0px;
     }
 }
 
-@media screen and (min-width: 767px) {
+@media screen and (min-width: 800px) {
 	#charts, #charts.on-screen {
 		right: 0px;
 		width: 45%;
 		top: 61px;
 		max-width: 500px;
+		bottom: 33px;
     }
 }
 
@@ -125,7 +126,7 @@ a:hover{
 	display: none;
 }
 
-@media screen and (min-width: 767px) {
+@media screen and (min-width: 800px) {
 	.charts-trigger {
 		display: none;
 	}
@@ -301,7 +302,7 @@ header {
 	}
 }
 
-@media screen and (min-width: 767px) {
+@media screen and (min-width: 800px) {
 	.logo {
 		float:left;
 	}
@@ -323,7 +324,7 @@ header {
 	padding:8px 0;
 }
 
-@media screen and (min-width: 767px) {
+@media screen and (min-width: 800px) {
 
 	.tools {
 		float:right;
